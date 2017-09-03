@@ -12,7 +12,7 @@ func main() {
 	verifyToken := os.Getenv("VERIFY_TOKEN")
 	apiSecret := os.Getenv("API_SECRET")
 	certPath := os.Getenv("CERT_PATH")
-	keyPath := os.Getenv("key_PATH")
+	keyPath := os.Getenv("KEY_PATH")
 	bot := mbotapi.NewBotAPI(accessToken, verifyToken, apiSecret)
 	callbacks, mux := bot.SetWebhook("/webhook")
 	go http.ListenAndServeTLS("0.0.0.0:8443", certPath, keyPath, mux)
