@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/abhinavdahiya/go-messenger-bot"
+	"log"
 	"net/http"
 	"os"
 )
@@ -18,6 +19,8 @@ func main() {
 	go http.ListenAndServeTLS(":8443", certPath, keyPath, mux)
 
 	for callback := range callbacks {
+		log.Printf("[%#v] %s", callback.Sender, callback.Message.Text)
+
 		respMsg := fmt.Sprintf("You've said: %s", callback.Message.Text)
 		msg := mbotapi.NewMessage(respMsg)
 		bot.Send(callback.Sender, msg, mbotapi.RegularNotif)
