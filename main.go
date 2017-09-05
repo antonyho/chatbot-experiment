@@ -27,9 +27,6 @@ func main() {
 	for callback := range callbacks {
 		log.Printf("[%#v] %s", callback.Sender, callback.Message.Text)
 
-		greet := mbotapi.NewMessage("Hello")
-		bot.Send(callback.Sender, greet, mbotapi.RegularNotif)
-
 		var respMsg string
 		if _, err := strconv.ParseInt(callback.Message.Text, 10, 64); err != nil {
 			respMsg = "Hello! This is a lab experiment. A Hong Kong stock quoting bot. Please provide stock number *NUMBER ONLY* to quote your stock."
@@ -38,7 +35,7 @@ func main() {
 			if err != nil {
 				log.Printf("Failed to quote stock [%s]. Error: %v\n", callback.Message.Text, err)
 			}
-			respMsg = fmt.Sprintf("%s | $ %f | Size: %d | L: %f | H: %f", quoteResp.Name, quoteResp.LastTradePrice, quoteResp.LastTradeSize, quoteResp.DayLow, quoteResp.DayHigh)
+			respMsg = fmt.Sprintf("%s | $%s | Size: %d | L: $%s | H: $%s", quoteResp.Name, quoteResp.LastTradePrice.String(), quoteResp.LastTradeSize, quoteResp.DayLow.String(), quoteResp.DayHigh.String())
 			log.Printf("%v\n", respMsg)
 		}
 		msg := mbotapi.NewMessage(respMsg)
