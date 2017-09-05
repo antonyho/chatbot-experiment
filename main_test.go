@@ -8,5 +8,5 @@ import (
 
 func TestQuote(t *testing.T) {
 	q, _ := finance.GetQuote("0005.HK")
-	t.Log("0005.HK: %v", spew.Sdump(q))
+	t.Logf("0005.HK: %v", spew.Sdump(q))
 }

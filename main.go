@@ -28,18 +28,17 @@ func main() {
 	for callback := range callbacks {
 		log.Printf("[%#v] %s", callback.Sender, callback.Message.Text)
 
+		var respMsg string
 		if _, err := strconv.ParseInt(callback.Message.Text, 10, 64); err != nil {
-			respMsg := fmt.Sprint("Hello! This is a lab experiment. A Hong Kong stock quoting bot. Please provide stock number *NUMBER ONLY* to quote your stock.")
-			msg := mbotapi.NewMessage(respMsg)
-			bot.Send(callback.Sender, msg, mbotapi.RegularNotif)
+			respMsg = fmt.Sprint("Hello! This is a lab experiment. A Hong Kong stock quoting bot. Please provide stock number *NUMBER ONLY* to quote your stock.")
 		} else {
 			quoteResp, err := finance.GetQuote(fmt.Sprintf("%s.HK", strings.TrimSpace(callback.Message.Text)))
 			if err != nil {
 				log.Printf("Failed to quote stock [%s]. Error: %v\n", callback.Message.Text, err)
 			}
-			respMsg := spew.Sdump(quoteResp)
-			msg := mbotapi.NewMessage(respMsg)
-			bot.Send(callback.Sender, msg, mbotapi.RegularNotif)
+			respMsg = spew.Sdump(quoteResp)
 		}
+		msg := mbotapi.NewMessage(respMsg)
+		bot.Send(callback.Sender, msg, mbotapi.RegularNotif)
 	}
 }
