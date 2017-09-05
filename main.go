@@ -28,6 +28,9 @@ func main() {
 	for callback := range callbacks {
 		log.Printf("[%#v] %s", callback.Sender, callback.Message.Text)
 
+		greet := mbotapi.NewMessage("Hello")
+		bot.Send(callback.Sender, greet, mbotapi.RegularNotif)
+
 		var respMsg string
 		if _, err := strconv.ParseInt(callback.Message.Text, 10, 64); err != nil {
 			respMsg = "Hello! This is a lab experiment. A Hong Kong stock quoting bot. Please provide stock number *NUMBER ONLY* to quote your stock."
