@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/FlashBoys/go-finance"
 	"github.com/abhinavdahiya/go-messenger-bot"
-	"github.com/davecgh/go-spew/spew"
 	"log"
 	"net/http"
 	"os"
