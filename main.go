@@ -39,7 +39,7 @@ func main() {
 			if err != nil {
 				log.Printf("Failed to quote stock [%s]. Error: %v\n", callback.Message.Text, err)
 			}
-			respMsg = spew.Sdump(quoteResp)
+			respMsg = fmt.Sprintf("%s | $ %f | Size: %d | L: %f | H: %f", quoteResp.Name, quoteResp.LastTradePrice, quoteResp.LastTradeSize, quoteResp.DayLow, quoteResp.DayHigh)
 			log.Printf("%v\n", respMsg)
 		}
 		msg := mbotapi.NewMessage(respMsg)
