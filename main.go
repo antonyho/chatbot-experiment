@@ -40,6 +40,7 @@ func main() {
 				log.Printf("Failed to quote stock [%s]. Error: %v\n", callback.Message.Text, err)
 			}
 			respMsg = spew.Sdump(quoteResp)
+			log.Printf("%v\n", respMsg)
 		}
 		msg := mbotapi.NewMessage(respMsg)
 		bot.Send(callback.Sender, msg, mbotapi.RegularNotif)
