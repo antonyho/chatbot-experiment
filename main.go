@@ -28,17 +28,18 @@ func main() {
 		log.Printf("[%#v] %s", callback.Sender, callback.Message.Text)
 
 		var respMsg string
-		if _, err := strconv.ParseInt(callback.Message.Text, 10, 64); err != nil {
-			respMsg = "Hello! This is a lab experiment. A stock quoting bot. Please provide stock symbol to quote your stock. For example \"0001.HK\", \"APPL\""
-		} else {
-			quoteResp, err := finance.GetQuote(strings.TrimSpace(callback.Message.Text))
-			if err != nil {
-				log.Printf("Failed to quote stock [%s]. Error: %v\n", callback.Message.Text, err)
-			}
-			respMsg = fmt.Sprintf("%s | $%s | Size: %d | L: $%s | H: $%s", quoteResp.Name, quoteResp.LastTradePrice.String(), quoteResp.LastTradeSize, quoteResp.DayLow.String(), quoteResp.DayHigh.String())
-			log.Printf("%v\n", respMsg)
-		}
+		respMsg = "Hello! This is a lab experiment. A stock quoting bot. Please provide stock symbol to quote your stock. For example \"0001.HK\", \"APPL\""
 		msg := mbotapi.NewMessage(respMsg)
+		bot.Send(callback.Sender, msg, mbotapi.RegularNotif)
+
+		quoteResp, err := finance.GetQuote(strings.TrimSpace(callback.Message.Text))
+		if err != nil {
+			log.Printf("Failed to quote stock [%s]. Error: %v\n", callback.Message.Text, err)
+		}
+		respMsg = fmt.Sprintf("%s | $%s | Size: %d | L: $%s | H: $%s", quoteResp.Name, quoteResp.LastTradePrice.String(), quoteResp.LastTradeSize, quoteResp.DayLow.String(), quoteResp.DayHigh.String())
+		log.Printf("%v\n", respMsg)
+
+		msg = mbotapi.NewMessage(respMsg)
 		bot.Send(callback.Sender, msg, mbotapi.RegularNotif)
 	}
 }
