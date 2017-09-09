@@ -27,7 +27,7 @@ func main() {
 		log.Printf("[%#v] %s", callback.Sender, callback.Message.Text)
 
 		var respMsg string
-		respMsg = "Hello! This is a lab experiment. A stock quoting bot. Please provide stock symbol to quote your stock. For example \"0001.HK\", \"APPL\""
+		respMsg = "Hello! This is a lab experiment. A stock quoting bot. Please provide stock symbol to quote your stock. For example \"0001.HK\", \"AAPL\", \"GOOG\""
 		msg := mbotapi.NewMessage(respMsg)
 		bot.Send(callback.Sender, msg, mbotapi.RegularNotif)
 
