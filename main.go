@@ -29,9 +29,9 @@ func main() {
 
 		var respMsg string
 		if _, err := strconv.ParseInt(callback.Message.Text, 10, 64); err != nil {
-			respMsg = "Hello! This is a lab experiment. A Hong Kong stock quoting bot. Please provide stock number *NUMBER ONLY* to quote your stock."
+			respMsg = "Hello! This is a lab experiment. A stock quoting bot. Please provide stock symbol to quote your stock. For example \"0001.HK\", \"APPL\""
 		} else {
-			quoteResp, err := finance.GetQuote(fmt.Sprintf("%s.HK", strings.TrimSpace(callback.Message.Text)))
+			quoteResp, err := finance.GetQuote(strings.TrimSpace(callback.Message.Text))
 			if err != nil {
 				log.Printf("Failed to quote stock [%s]. Error: %v\n", callback.Message.Text, err)
 			}
